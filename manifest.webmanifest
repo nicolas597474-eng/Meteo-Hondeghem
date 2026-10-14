@@ -1,0 +1,15 @@
+{
+  "name": "MeteoAI — Hondeghem",
+  "short_name": "MeteoAI",
+  "description": "La météo qui apprend de ses erreurs — Hondeghem, Nord",
+  "lang": "fr",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0EA5E9",
+  "theme_color": "#0EA5E9",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}
