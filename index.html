@@ -3,70 +3,70 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<meta name="theme-color" content="#2D1B69" />
+<meta name="theme-color" content="#0D0B07" />
 <title>MeteoAI — Hondeghem</title>
 <meta name="description" content="La météo qui apprend de ses erreurs — Hondeghem, Nord" />
 <link rel="manifest" href="manifest.webmanifest" />
 <link rel="icon" href="icon.svg" type="image/svg+xml" />
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-  body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background: #241456; background-image: linear-gradient(180deg,#241456 0%,#3B1D8F 35%,#6D28D9 70%,#8A2BE2 100%); background-attachment: fixed; color: #fff; min-height: 100vh; }
+  body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background: radial-gradient(ellipse 90% 45% at 50% -5%, rgba(212,175,55,.16), transparent 60%), radial-gradient(ellipse 60% 35% at 90% 100%, rgba(120,90,20,.14), transparent 60%), linear-gradient(180deg,#050505 0%,#0D0B07 60%,#120E07 100%); background-attachment: fixed; color: #F5EFE0; min-height: 100vh; }
   .wrap { max-width: 640px; margin: 0 auto; padding: 0 16px 30px; }
   .top { display: flex; justify-content: space-between; align-items: flex-start; padding-top: 20px; }
   .brandrow { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
-  .brand { font-size: 10px; font-weight: 800; letter-spacing: .06em; color: rgba(255,255,255,.75); background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.18); padding: 3px 8px; border-radius: 999px; }
+  .brand { font-size: 9px; font-weight: 800; letter-spacing: .24em; text-transform: uppercase; color: #D4AF37; background: rgba(212,175,55,.06); border: 1px solid rgba(212,175,55,.35); padding: 4px 10px; border-radius: 999px; }
   .badge { font-size: 10px; padding: 4px 9px; border-radius: 999px; white-space: nowrap; }
   .badge.live { color: #6ee7b7; border: 1px solid rgba(52,211,153,.35); background: rgba(52,211,153,.12); }
   .badge.off { color: #fde68a; border: 1px solid rgba(251,191,36,.35); background: rgba(251,191,36,.1); }
-  .city { font-size: 27px; font-weight: 800; display: flex; align-items: center; gap: 8px; letter-spacing: -.02em; }
+  .city { font-size: 27px; font-weight: 400; display: flex; align-items: center; gap: 8px; letter-spacing: .02em; color: #E8C96A; font-family: Georgia, "Times New Roman", serif; }
   .city .arr { font-size: 13px; opacity: .7; }
   .coord { display: none; font-size: 11px; color: rgba(255,255,255,.7); background: rgba(0,0,0,.25); border: 1px solid rgba(255,255,255,.15); border-radius: 10px; padding: 6px 10px; margin-top: 8px; width: fit-content; }
-  .big { font-size: 110px; font-weight: 900; line-height: 1; letter-spacing: -4px; margin-top: 8px; color: transparent; -webkit-text-stroke: 3px rgba(255,255,255,.85); }
-  @supports not (-webkit-text-stroke: 2px #fff) { .big { color: rgba(255,255,255,.3); } }
-  .cond { font-size: 16px; font-weight: 600; margin-top: 6px; }
-  .subline { font-size: 13px; color: rgba(255,255,255,.75); margin-top: 3px; }
+  .big { font-size: 110px; font-weight: 400; line-height: 1; letter-spacing: -3px; margin-top: 8px; font-family: Georgia, "Times New Roman", serif; background: linear-gradient(180deg,#F9E8B0 5%,#F6D65E 45%,#A87F1F 95%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  @supports not ((-webkit-background-clip: text) or (background-clip: text)) { .big { color: #F6D65E; } }
+  .cond { font-size: 16px; font-weight: 600; margin-top: 6px; color: #C9BC97; }
+  .subline { font-size: 13px; color: #C9BC97; margin-top: 3px; }
   .aqirow { display: flex; align-items: center; gap: 12px; margin-top: 14px; }
   .aqi-badge { width: 58px; height: 58px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; flex-shrink: 0; }
   .aqi-badge .n { font-size: 17px; font-weight: 900; line-height: 1; }
   .aqi-badge .l { font-size: 8px; font-weight: 700; letter-spacing: .04em; }
-  .aqi-txt { font-size: 12px; color: rgba(255,255,255,.85); line-height: 1.45; }
+  .aqi-txt { font-size: 12px; color: #A79A75; line-height: 1.45; }
   .aqi-txt b { font-size: 13px; }
-  .card { background: rgba(0,0,0,.22); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,.14); border-radius: 20px; padding: 16px; margin-top: 16px; box-shadow: 0 6px 24px rgba(0,0,0,.18); }
-  .card .head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-  .card h2 { font-size: 15px; font-weight: 700; }
-  .more { font-size: 11px; color: rgba(255,255,255,.65); text-decoration: none; font-weight: 600; }
-  .dayrow { display: grid; grid-template-columns: 50px 30px 38px 1fr 38px; align-items: center; gap: 8px; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,.07); }
+  .card { background: linear-gradient(165deg, rgba(212,175,55,.07), rgba(10,8,4,.5) 55%); border: 1px solid rgba(212,175,55,.26); border-radius: 20px; padding: 16px; margin-top: 16px; box-shadow: 0 10px 40px rgba(0,0,0,.5), inset 0 1px 0 rgba(246,214,94,.12); }
+  .card .head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(212,175,55,.18); }
+  .card h2 { font-size: 11px; font-weight: 700; color: #F6D65E; letter-spacing: .18em; text-transform: uppercase; }
+  .more { font-size: 11px; color: #D4AF37; text-decoration: none; font-weight: 600; font-style: italic; }
+  .dayrow { display: grid; grid-template-columns: 50px 30px 38px 1fr 38px; align-items: center; gap: 8px; padding: 10px 0; border-bottom: 1px solid rgba(212,175,55,.1); }
   .dayrow:last-child { border-bottom: 0; }
-  .dayrow .dy { font-size: 13px; font-weight: 600; }
+  .dayrow .dy { font-size: 13px; font-weight: 600; color: #E8DFC8; }
   .dayrow .ic { font-size: 20px; text-align: center; }
-  .mn { color: #32CD32; font-weight: 700; font-size: 14px; text-align: right; }
-  .mx { color: #FFD700; font-weight: 700; font-size: 14px; }
-  .range { position: relative; height: 5px; border-radius: 999px; background: rgba(255,255,255,.14); }
-  .range > div { position: absolute; top: 0; bottom: 0; border-radius: 999px; background: linear-gradient(90deg,#32CD32,#7ED957); }
-  .btn { display: block; width: 100%; margin-top: 14px; padding: 12px; border: 0; border-radius: 14px; background: rgba(0,0,0,.35); border: 1px solid rgba(255,255,255,.12); color: #fff; font-size: 14px; font-weight: 700; cursor: pointer; }
+  .mn { color: #B8C0CC; font-weight: 700; font-size: 14px; text-align: right; }
+  .mx { color: #F6D55C; font-weight: 700; font-size: 14px; }
+  .range { position: relative; height: 5px; border-radius: 999px; background: rgba(255,255,255,.09); }
+  .range > div { position: absolute; top: 0; bottom: 0; border-radius: 999px; background: linear-gradient(90deg,#8C96A5,#F6D55C); box-shadow: 0 0 8px rgba(246,213,92,.35); }
+  .btn { display: block; width: 100%; margin-top: 14px; padding: 12px; border: 1px solid rgba(212,175,55,.35); border-radius: 14px; background: rgba(212,175,55,.08); color: #F6D65E; font-size: 14px; font-weight: 700; letter-spacing: .06em; cursor: pointer; }
   .scroll { overflow-x: auto; margin-top: 4px; scrollbar-width: none; }
   .scroll::-webkit-scrollbar { display: none; }
   .gauges { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-  .gauge { text-align: center; padding: 12px 6px 10px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 16px; }
-  .glbl { font-size: 12px; font-weight: 700; margin-top: 6px; }
-  .gsub { font-size: 10px; color: rgba(255,255,255,.6); margin-top: 1px; }
+  .gauge { text-align: center; padding: 12px 6px 10px; background: rgba(212,175,55,.06); border: 1px solid rgba(212,175,55,.22); border-radius: 16px; }
+  .glbl { font-size: 11px; font-weight: 700; margin-top: 6px; color: #E8DFC8; text-transform: uppercase; letter-spacing: .08em; }
+  .gsub { font-size: 10px; color: #A79A75; margin-top: 1px; }
   table { width: 100%; border-collapse: collapse; font-size: 11px; }
-  th { color: rgba(255,255,255,.55); font-size: 9px; text-transform: uppercase; letter-spacing: .04em; padding: 6px 4px; border-bottom: 1px solid rgba(255,255,255,.12); text-align: right; }
+  th { color: rgba(212,175,55,.65); font-size: 9px; text-transform: uppercase; letter-spacing: .04em; padding: 6px 4px; border-bottom: 1px solid rgba(212,175,55,.18); text-align: right; }
   th:first-child, td:first-child { text-align: left; }
-  td { padding: 7px 4px; border-bottom: 1px solid rgba(255,255,255,.06); text-align: right; white-space: nowrap; }
-  .meter { height: 6px; border-radius: 999px; background: rgba(255,255,255,.14); overflow: hidden; display: inline-block; vertical-align: middle; width: 54px; }
+  td { padding: 7px 4px; border-bottom: 1px solid rgba(212,175,55,.1); text-align: right; white-space: nowrap; }
+  .meter { height: 6px; border-radius: 999px; background: rgba(212,175,55,.15); overflow: hidden; display: inline-block; vertical-align: middle; width: 54px; }
   .meter > div { height: 100%; border-radius: 999px; }
   .statgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-  .stat { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 12px; padding: 8px 4px; text-align: center; }
-  .stat .l { font-size: 9px; text-transform: uppercase; letter-spacing: .04em; color: rgba(255,255,255,.55); font-weight: 700; }
+  .stat { background: rgba(212,175,55,.06); border: 1px solid rgba(212,175,55,.22); border-radius: 12px; padding: 8px 4px; text-align: center; }
+  .stat .l { font-size: 9px; text-transform: uppercase; letter-spacing: .04em; color: rgba(212,175,55,.65); font-weight: 700; }
   .stat .v { font-size: 15px; font-weight: 800; margin-top: 2px; }
-  .stat .s { font-size: 9px; color: rgba(255,255,255,.55); }
-  .note { font-size: 9px; color: rgba(255,255,255,.5); margin-top: 8px; line-height: 1.5; }
+  .stat .s { font-size: 9px; color: #A79A75; }
+  .note { font-size: 9px; color: #A79A75; margin-top: 8px; line-height: 1.5; }
   .bestrow { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
-  .bestrow .b { font-size: 17px; font-weight: 800; }
-  .bestrow .k { font-size: 9px; color: rgba(255,255,255,.55); text-transform: uppercase; font-weight: 700; }
+  .bestrow .b { font-size: 17px; font-weight: 800; color: #F6D65E; }
+  .bestrow .k { font-size: 9px; color: #A79A75; text-transform: uppercase; font-weight: 700; }
   .bestrow .v { font-size: 20px; font-weight: 900; }
-  footer { text-align: center; font-size: 10px; color: rgba(255,255,255,.6); margin: 24px 0 10px; line-height: 1.7; }
+  footer { text-align: center; font-size: 10px; color: #A79A75; margin: 24px 0 10px; line-height: 1.7; }
 </style>
 </head>
 <body>
@@ -264,15 +264,15 @@ function svg24(h) {
   var py = function (t) { return 62 - (t - mn) / (mx - mn) * 34; };
   var pts = h.map(function (x, i) { return px(i) + "," + py(x.temp).toFixed(1); }).join(" ");
   var out = '<svg width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + " " + H + '">';
-  out += '<line x1="0" y1="110" x2="' + W + '" y2="110" stroke="rgba(255,255,255,.12)"/>';
-  out += '<polyline points="' + pts + '" fill="none" stroke="#FFC107" stroke-width="2.5"/>';
+  out += '<line x1="0" y1="110" x2="' + W + '" y2="110" stroke="rgba(212,175,55,.18)"/>';
+  out += '<polyline points="' + pts + '" fill="none" stroke="#F6D65E" stroke-width="2.5"/>';
   h.forEach(function (x, i) {
     var X = px(i), Y = py(x.temp);
-    out += '<text x="' + X + '" y="' + (Y - 10).toFixed(1) + '" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">' + Math.round(x.temp) + '°</text>';
-    out += '<circle cx="' + X + '" cy="' + Y.toFixed(1) + '" r="3.5" fill="#fff"/>';
-    out += '<text x="' + X + '" y="126" font-size="11" fill="rgba(255,255,255,.85)" text-anchor="middle">' + x.t + '</text>';
+    out += '<text x="' + X + '" y="' + (Y - 10).toFixed(1) + '" font-size="12" font-weight="700" fill="#F9E8B0" text-anchor="middle">' + Math.round(x.temp) + '°</text>';
+    out += '<circle cx="' + X + '" cy="' + Y.toFixed(1) + '" r="3.5" fill="#F9E8B0"/>';
+    out += '<text x="' + X + '" y="126" font-size="11" fill="#E8DFC8" text-anchor="middle">' + x.t + '</text>';
     out += '<text x="' + X + '" y="145" font-size="13" text-anchor="middle">' + hourIcon(x, i) + '</text>';
-    out += '<text x="' + X + '" y="162" font-size="9" fill="rgba(255,255,255,.55)" text-anchor="middle">' + (x.wind != null ? r1(x.wind) : "–") + '</text>';
+    out += '<text x="' + X + '" y="162" font-size="9" fill="#A79A75" text-anchor="middle">' + (x.wind != null ? r1(x.wind) : "–") + '</text>';
   });
   out += "</svg>";
   return out;
@@ -284,10 +284,10 @@ function gauge(lbl, val, unit, pct, color, sub) {
   var off = C * (1 - p);
   return '<div class="gauge">'
     + '<svg width="72" height="72" viewBox="0 0 72 72">'
-    + '<circle cx="36" cy="36" r="26" fill="none" stroke="rgba(255,255,255,.14)" stroke-width="7"/>'
+    + '<circle cx="36" cy="36" r="26" fill="none" stroke="rgba(212,175,55,.15)" stroke-width="7"/>'
     + '<circle cx="36" cy="36" r="26" fill="none" stroke="' + color + '" stroke-width="7" stroke-linecap="round" stroke-dasharray="' + C.toFixed(1) + '" stroke-dashoffset="' + off.toFixed(1) + '" transform="rotate(-90 36 36)"/>'
-    + '<text x="36" y="34" text-anchor="middle" font-size="15" font-weight="800" fill="#fff">' + val + '</text>'
-    + '<text x="36" y="48" text-anchor="middle" font-size="8" fill="rgba(255,255,255,.7)">' + unit + '</text>'
+    + '<text x="36" y="34" text-anchor="middle" font-size="15" font-weight="800" fill="#F5EFE0">' + val + '</text>'
+    + '<text x="36" y="48" text-anchor="middle" font-size="8" fill="#A79A75">' + unit + '</text>'
     + "</svg>"
     + '<div class="glbl">' + lbl + "</div>"
     + (sub ? '<div class="gsub">' + sub + "</div>" : "")
@@ -339,8 +339,8 @@ function buildPage() {
     + '<div class="gauges">'
     + gauge("IQA", d.aqi != null ? d.aqi : "–", "air", d.aqi != null ? d.aqi / 100 : 0, aq[0], aq[2])
     + gauge("Indice UV", c.uv != null ? r1(c.uv) : "–", "uv", c.uv != null ? c.uv / 11 : 0, uv[0], uv[1])
-    + gauge("Humidité", c.hum, "%", c.hum / 100, "#38BDF8", "💧 " + c.hum + "%")
-    + gauge("Vent", c.wind, "km/h", c.wind / 60, "#22D3EE", "Rafales " + (c.gust ? Math.round(c.gust) : "–") + " km/h")
+    + gauge("Humidité", c.hum, "%", c.hum / 100, "#B8C0CC", "💧 " + c.hum + "%")
+    + gauge("Vent", c.wind, "km/h", c.wind / 60, "#F9E8B0", "Rafales " + (c.gust ? Math.round(c.gust) : "–") + " km/h")
     + "</div>"
     + '<div class="statgrid" style="margin-top:12px">'
     + '<div class="stat"><div class="l">Lever</div><div class="v">🌅 ' + d.astro.sunrise + "</div></div>"
